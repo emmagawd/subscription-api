@@ -1,0 +1,40 @@
+{
+  "name": "subscription-api",
+  "version": "1.0.0",
+  "description": "NWO Take-Home assessment",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emmagawd/subscription-api.git"
+  },
+  "keywords": [
+    "API",
+    "subscription",
+    "newsletter",
+    "email",
+    "Node.js",
+    "Express",
+    "PostgreSQL",
+    "backend"
+  ],
+  "author": "Emma Ijiogbe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emmagawd/subscription-api/issues"
+  },
+  "homepage": "https://github.com/emmagawd/subscription-api#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.1.0"
+  }
+}
