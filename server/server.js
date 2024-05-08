@@ -4,6 +4,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const subscriptionRouter = require('./routes/subscriptionRouter');
+
 /**
  * handle parsing request body
  */
@@ -11,6 +13,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.send('Subscription API Running'));
+
+/**
+ * define route handlers
+ */
+app.use('/subscribe', subscriptionRouter);
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) =>
