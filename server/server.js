@@ -4,8 +4,6 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const subscriptionRouter = require('./routes/subscriptionRouter');
-
 /**
  * handle parsing request body
  */
@@ -14,10 +12,28 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.send('Subscription API Running'));
 
-/**
- * define route handlers
- */
-app.use('/subscribe', subscriptionRouter);
+// To route to subController middleware functions:
+const subController = require('./controllers/subController');
+
+// Create Subscription:
+app.post('/subs', subController.createSub, (req, res) => {
+  return res.status(201).json(res.locals.newSub);
+});
+
+// Fetch Subscription:
+app.get('/subs/:userId', subController.getSub, (req, res) => {
+  return res.status(200).json(res.locals.fetchedSub);
+});
+
+// Update Subscription:
+app.patch('/subs/:subscriptionId', subController.updateSub, (req, res) => {
+  return res.status(201).json(res.locals.updatedSub);
+});
+
+// Cancel Subscription:
+app.delete('/subs/:subscriptionId', subController.deleteSub, (req, res) => {
+  return res.status(201).json(res.locals.deletedSub);
+});
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) =>
@@ -28,7 +44,6 @@ app.use((req, res) =>
  * express error handler
  * @see https://expressjs.com/en/guide/error-handling.html#writing-error-handlers
  */
-
 //any middleware that fails:
 app.use((err, req, res, next) => {
   console.log('----> We are in the global error handler <----');
