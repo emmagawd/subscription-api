@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
  * handle parsing request body
  */
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // to parse HTML form data if linking to frontend
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.send('Subscription API Running'));
 

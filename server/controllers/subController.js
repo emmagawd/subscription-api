@@ -13,13 +13,13 @@ subController.createSub = async (req, res, next) => {
     'SELECT * FROM subscriptions WHERE user_id = $1 AND active = TRUE';
 
   try {
-    const existingSub = await db.query(checkQuery, [userId]);
-
-    if (existingSub.rows.length > 0) {
-      return res
-        .status(409)
-        .json({ error: 'User already has an active subscription.' });
-    }
+    // const existingSub = await db.query(checkQuery, [userId]);
+    // console.log('THIS IS EXISTINGSUB: ', existingSub);
+    // if (existingSub.rows.length > 0) {
+    //   return res
+    //     .status(409)
+    //     .json({ error: 'User already has an active subscription.' });
+    // }
 
     // If no active subscription, proceed to create a new one
     const insertQuery = `
@@ -34,7 +34,7 @@ subController.createSub = async (req, res, next) => {
       source,
       subcategory,
     ]);
-
+    console.log('newSub: ', newSub);
     res.locals.newSub = newSub.rows[0];
     return next();
   } catch (err) {

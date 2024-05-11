@@ -16,7 +16,7 @@ pool.on('error', (err) => {
   console.error('Error connecting to PostgreSQL database:', err);
 });
 
-// For testing (to reset database before each test)
+// For testing (to reset database before/after each test)
 async function resetDatabase() {
   await pool.query('DELETE FROM subscriptions;');
   await pool.query('DELETE FROM users;');
