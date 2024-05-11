@@ -16,22 +16,21 @@ pool.on('error', (err) => {
   console.error('Error connecting to PostgreSQL database:', err);
 });
 
+// For testing (to reset database before each test)
 async function resetDatabase() {
   await pool.query('DELETE FROM subscriptions;');
   await pool.query('DELETE FROM users;');
 }
 
-// Schema for the database can be found below:
-
 // Export an object that contains a property called query,
 // which is a function that returns the invocation of pool.query() after logging the query.
-// This will be required in the controllers to be the access point to the database.
+// Required in the controllers to be the access point to the database.
 module.exports = {
   resetDatabase,
   query: (text, params, callback) => {
     return pool.query(text, params, callback);
   },
-  // Added this method in order to ensure I am checking out the client and performing theses connections async without violating total concurrent connections.
+  // Added this method in order to ensure we're checking out the client and performing theses connections async without violating total concurrent connections.
   // Sources:
   // https://node-postgres.com/features/pooling
   // https://node-postgres.com/apis/pool
