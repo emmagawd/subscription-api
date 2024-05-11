@@ -1,4 +1,4 @@
-const db = require('../models/model');
+const db = require('../models/dbModel');
 
 const subController = {};
 
@@ -7,12 +7,14 @@ subController.createSub = async (req, res, next) => {
   const { userId } = req.body; // Assuming the userId is sent in the request body
   const { industry, source, subcategory } = req.body; // Extract other necessary fields
 
+  console.log('req.body: ', req.body);
   // First, check if an active subscription already exists for the user
   const checkQuery =
     'SELECT * FROM subscriptions WHERE user_id = $1 AND active = TRUE';
 
   try {
     const existingSub = await db.query(checkQuery, [userId]);
+
     if (existingSub.rows.length > 0) {
       return res
         .status(409)
@@ -32,7 +34,8 @@ subController.createSub = async (req, res, next) => {
       source,
       subcategory,
     ]);
-    res.locals.newSub = newSub.rows[0]; // Store the new subscription in res.locals for access in next middleware
+
+    res.locals.newSub = newSub.rows[0];
     return next();
   } catch (err) {
     return next({

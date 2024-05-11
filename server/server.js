@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const subRouter = require('./routes/subRouter');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,28 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.send('Subscription API Running'));
 
-// To route to subController middleware functions:
-const subController = require('./controllers/subController');
-
-// Create Subscription:
-app.post('/subs', subController.createSub, (req, res) => {
-  return res.status(201).json(res.locals.newSub);
-});
-
-// Fetch Subscription:
-app.get('/subs/:userId', subController.getSub, (req, res) => {
-  return res.status(200).json(res.locals.fetchedSub);
-});
-
-// Update Subscription:
-app.patch('/subs/:subscriptionId', subController.updateSub, (req, res) => {
-  return res.status(201).json(res.locals.updatedSub);
-});
-
-// Cancel Subscription:
-app.delete('/subs/:subscriptionId', subController.deleteSub, (req, res) => {
-  return res.status(201).json(res.locals.deletedSub);
-});
+// to route to subcription router middleware:
+app.use('/api', subRouter);
 
 // catch-all route handler for any requests to an unknown route
 app.use((req, res) =>

@@ -5,7 +5,8 @@
   "main": "server/server.js",
   "scripts": {
     "dev": "nodemon ./server/server.js",
-    "test": "jest"
+    "test": "jest",
+    "start": "node ./server/server.js"
   },
   "repository": {
     "type": "git",
@@ -33,18 +34,19 @@
     "pg": "^8.11.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.2.0",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "globals": "^15.1.0",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "@eslint/js": "^9.2.0",
     "babel-loader": "^8.2.3",
     "concurrently": "^5.0.0",
     "cross-env": "^6.0.3",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
     "file-loader": "^6.2.0",
-    "nodemon": "^1.18.9"
+    "globals": "^15.1.0",
+    "nodemon": "^1.18.9",
+    "supertest": "^7.0.0"
   },
   "nodemonConfig": {
     "ignore": [

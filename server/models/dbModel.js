@@ -1,13 +1,25 @@
+require('dotenv').config();
 const { Pool } = require('pg');
-
-const PG_URI =
-  'postgres://mlrfcjpy:v9DtEqGPJJ3KKX8GbUm2gMEQE8UsRmmA@stampy.db.elephantsql.com/mlrfcjpy';
 
 // create a new pool using the connection string above
 const pool = new Pool({
-  connectionString: PG_URI,
+  connectionString: process.env.PG_URI,
   max: 4, // Defaults to 10 which will overrun the elephantsql
 });
+
+// Log database connection status
+pool.on('connect', () => {
+  console.log('Connected to PostgreSQL database');
+});
+
+pool.on('error', (err) => {
+  console.error('Error connecting to PostgreSQL database:', err);
+});
+
+async function resetDatabase() {
+  await pool.query('DELETE FROM subscriptions;');
+  await pool.query('DELETE FROM users;');
+}
 
 // Schema for the database can be found below:
 
@@ -15,6 +27,7 @@ const pool = new Pool({
 // which is a function that returns the invocation of pool.query() after logging the query.
 // This will be required in the controllers to be the access point to the database.
 module.exports = {
+  resetDatabase,
   query: (text, params, callback) => {
     return pool.query(text, params, callback);
   },
