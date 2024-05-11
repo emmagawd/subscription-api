@@ -8,18 +8,19 @@ subController.createSub = async (req, res, next) => {
   const { industry, source, subcategory } = req.body; // Extract other necessary fields
 
   console.log('req.body: ', req.body);
-  // First, check if an active subscription already exists for the user
+
   const checkQuery =
     'SELECT * FROM subscriptions WHERE user_id = $1 AND active = TRUE';
 
   try {
-    // const existingSub = await db.query(checkQuery, [userId]);
-    // console.log('THIS IS EXISTINGSUB: ', existingSub);
-    // if (existingSub.rows.length > 0) {
-    //   return res
-    //     .status(409)
-    //     .json({ error: 'User already has an active subscription.' });
-    // }
+    const existingSub = await db.query(checkQuery, [userId]);
+    console.log('existingSub: ', existingSub);
+    if (existingSub.rows.length > 0) {
+      console.log('Active sub already exists!');
+      return res
+        .status(409)
+        .json({ error: 'User already has an active subscription.' });
+    }
 
     // If no active subscription, proceed to create a new one
     const insertQuery = `

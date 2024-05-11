@@ -3,25 +3,35 @@ const { Pool } = require('pg');
 
 // create a new pool using the connection string above
 const pool = new Pool({
-  connectionString: process.env.PG_URI,
+  connectionString: process.env.PG_TEST_URI,
   max: 4, // Defaults to 10 which will overrun the elephantsql
 });
 
 // Log database connection status
 pool.on('connect', () => {
-  console.log('Connected to PostgreSQL database');
+  console.log('Connected to PostgreSQL test database');
 });
 
 pool.on('error', (err) => {
-  console.error('Error connecting to PostgreSQL database:', err);
+  console.error('Error connecting to PostgreSQL test database:', err);
 });
+
+// For testing (to reset database before/after each test)
+async function resetDatabase() {
+  try {
+    await pool.query('TRUNCATE TABLE subscriptions RESTART IDENTITY CASCADE;');
+    console.log('Database reset successfully');
+  } catch (err) {
+    console.error('Error resetting database:', err);
+  }
+}
 
 // Export an object that contains a property called query,
 // which is a function that returns the invocation of pool.query() after logging the query.
 // Required in the controllers to be the access point to the database.
 module.exports = {
+  resetDatabase,
   query: (text, params, callback) => {
-    console.log('query running!');
     return pool.query(text, params, callback);
   },
   // Added this method in order to ensure we're checking out the client and performing theses connections async without violating total concurrent connections.
