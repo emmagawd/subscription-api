@@ -113,10 +113,6 @@ describe('Route integration', () => {
 
   describe('/api/subs/:userId', () => {
     describe('GET', () => {
-      // beforeEach(async () => {
-      //   await resetDatabase(); // Reset the database before each test
-      // });
-
       it('should fetch subscriptions for a user', async () => {
         // Directly insert a subscription into the database
         await db.query(
