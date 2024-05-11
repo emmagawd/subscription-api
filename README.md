@@ -55,7 +55,7 @@ Running the program:
 
 Testing the Application:
 
-1. Run the automated test (npm run test)
+1. Run the automated test (npm test)
 
 ### Database Relationships
 
