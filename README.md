@@ -64,3 +64,4 @@ The `subscriptions` table contains a foreign key that links each subscription to
 - Each subscription is associated with an existing user.
 - Deleting a user from the `users` table will automatically remove all their subscriptions (due to the `ON DELETE CASCADE` rule).
   It is crucial to maintain these relationships to ensure data integrity and correct application behavior.
+  done
